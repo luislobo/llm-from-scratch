@@ -1,0 +1,27 @@
+@startuml
+title Autoregressive Text Generation
+
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+
+start
+:Prompt text;
+:Encode with stoi;
+:Create idx tensor;
+while (new tokens remaining?) is (yes)
+  :Keep last block_size tokens;
+  :Run GPT forward pass;
+  :Take logits from final position;
+  :Divide logits by temperature;
+  if (top_k > 0?) then (yes)
+    :Keep only top-k logits;
+  endif
+  :Softmax to probabilities;
+  :Sample next token;
+  :Append token to idx;
+endwhile (no)
+:Decode idx with itos;
+:Return generated text;
+stop
+@enduml

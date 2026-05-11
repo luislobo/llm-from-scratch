@@ -1,0 +1,21 @@
+@startuml
+title Learning Rate Schedule
+
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+
+rectangle "Training step" as step
+rectangle "Warmup\nfirst 100 steps\nlr rises to max_lr" as warmup
+rectangle "Cosine decay\nremaining steps\nlr falls toward min_lr" as decay
+rectangle "Optimizer param groups\nreceive current lr" as optimizer
+
+step -down-> warmup : step < warmup_steps
+step -down-> decay : otherwise
+warmup -down-> optimizer
+decay -down-> optimizer
+@enduml

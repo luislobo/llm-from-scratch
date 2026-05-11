@@ -1,0 +1,30 @@
+@startuml
+title Reading Training Signals
+
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+
+rectangle "Watch train loss\nand validation loss" as watch
+rectangle "Both decrease\nmodel is learning" as learning
+rectangle "Train decreases\nvalidation increases\noverfitting" as overfit
+rectangle "Loss spikes\nlearning rate may be too high\nor gradients are unstable" as spikes
+rectangle "Loss plateaus\nmodel has learned what it can" as plateau
+rectangle "Keep training\nor compare generated samples" as keep
+rectangle "Use more data,\nsmaller model, dropout,\nor early stopping" as regularize
+rectangle "Lower learning rate\nand check gradient clipping" as stabilize
+rectangle "Use more data,\nbigger model, or better tokenizer" as scale
+
+watch -down-> learning
+watch -down-> overfit
+watch -down-> spikes
+watch -down-> plateau
+learning -down-> keep
+overfit -down-> regularize
+spikes -down-> stabilize
+plateau -down-> scale
+@enduml

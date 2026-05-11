@@ -1,0 +1,46 @@
+@startuml
+title Full Training Loop
+
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+
+start
+:Select device;
+:Load data and build tokenizer;
+:Create GPT model;
+:Create AdamW optimizer;
+:Initialize loss_log;
+
+while (step < max_steps?) is (yes)
+  if (step % 100 == 0?) then (yes)
+    :model.eval();
+    :Average validation loss over 20 batches;
+    :Print validation loss;
+    :model.train();
+  endif
+
+  :Compute learning rate\nwarmup then cosine decay;
+  :Apply lr to optimizer;
+  :Get training batch x, y;
+  :Forward pass through GPT;
+  :Compute cross-entropy loss;
+  :Zero gradients;
+  :Backpropagate loss;
+  :Clip gradients at 1.0;
+  :Optimizer step;
+  :Record train loss;
+
+  if (step > 0 and step % 100 == 0?) then (yes)
+    :Generate sample text;
+  endif
+
+  if (step > 0 and step % 1000 == 0?) then (yes)
+    :Save checkpoint_N.pt;
+  endif
+endwhile (no)
+
+:Save checkpoint_final.pt;
+:Write loss_log.json;
+stop
+@enduml

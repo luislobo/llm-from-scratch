@@ -8,6 +8,8 @@ GPT is trained with **next-token prediction**: given tokens `[t0, t1, ..., tn]`,
 
 This is a self-supervised task — the labels come from the data itself. Every piece of text is simultaneously input and target, just shifted by one position.
 
+![Next-token training objective](diagrams/training-objective.png)
+
 ## Write It: `train.py`
 
 Create a new file called `train.py` in your scratchpad. This file imports from `model.py` (which you wrote in Part 2) and from `generate.py` (which you'll write in Part 4 — skip the sample generation for now and come back to add it after Part 4).
@@ -50,6 +52,8 @@ Each batch:
 
 The function returns `stoi`/`itos` mappings alongside the batch generators — you'll need these for text generation.
 
+![Character data loading and batching](diagrams/data-batching.png)
+
 ### Step 2: Device Setup
 
 ```python
@@ -83,6 +87,8 @@ Two phases:
 
 2. **Cosine decay** (remaining steps): Smoothly decrease the learning rate. Large updates early (explore), small updates late (refine).
 
+![Learning rate schedule](diagrams/lr-schedule.png)
+
 ### Step 4: The Optimizer
 
 ```python
@@ -92,6 +98,8 @@ optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
 For character-level training on Shakespeare, plain `AdamW` with `lr=1e-3` and light weight decay works well. The full GPT-2 recipe (separate decay groups, betas=(0.9, 0.95), weight_decay=0.1) is designed for large-scale BPE training and is overkill here.
 
 ### Step 5: The Full Training Loop
+
+![Full training loop](diagrams/training-loop.png)
 
 ```python
 import json
@@ -288,6 +296,8 @@ Step  3500 | val loss: 2.34   ← fully memorizing (train loss is 0.54)
 ```
 
 The **best model** is around step 1500-2000 (val loss ~1.57), not step 5000. After that, every step makes the model *worse* at generating novel text — it's just getting better at reciting the training data.
+
+![Training diagnostics from loss curves](diagrams/training-diagnostics.png)
 
 ### What Causes Overfitting?
 

@@ -1,0 +1,29 @@
+@startuml
+title Next-Token Training Objective
+
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+
+rectangle "Text\n\"To be\"" as text
+rectangle "Tokenizer" as tokenizer
+rectangle "Token sequence\n[t0, t1, t2, t3, t4, t5]" as tokens
+rectangle "Input x\n[t0, t1, t2, t3, t4]" as input
+rectangle "Target y\n[t1, t2, t3, t4, t5]" as target
+rectangle "GPT" as model
+rectangle "Predicted next-token logits\none distribution per position" as logits
+rectangle "Cross-entropy loss\ncompare logits to y" as loss
+
+text -down-> tokenizer
+tokenizer -down-> tokens
+tokens -down-> input
+tokens -down-> target
+input -down-> model
+model -down-> logits
+logits -down-> loss
+target -down-> loss
+@enduml

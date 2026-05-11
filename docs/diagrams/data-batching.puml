@@ -1,0 +1,31 @@
+@startuml
+title Character Data Loading and Batching
+
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+
+rectangle "data/shakespeare.txt" as file
+rectangle "Read text" as read
+rectangle "Build vocabulary\nchars, stoi, itos" as vocab
+rectangle "Encode all characters\ntokens: LongTensor" as encode
+rectangle "Split tokens\n90% train / 10% validation" as split
+rectangle "Sample random start positions\nbatch_size examples" as sample
+rectangle "x batch\npositions i .. i + block_size" as x
+rectangle "y batch\npositions i + 1 .. i + block_size + 1" as y
+rectangle "Move x and y to device\nmps, cuda, or cpu" as device
+
+file -down-> read
+read -down-> vocab
+vocab -down-> encode
+encode -down-> split
+split -down-> sample
+sample -down-> x
+sample -down-> y
+x -down-> device
+y -down-> device
+@enduml

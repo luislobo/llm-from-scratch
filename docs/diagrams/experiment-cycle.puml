@@ -1,0 +1,28 @@
+@startuml
+title Training Experiment Cycle
+
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+
+rectangle "Choose config\nmodel size, context length,\nlearning rate, dataset" as config
+rectangle "Train model" as train
+rectangle "Inspect loss_log.json\ntrain loss vs validation loss" as loss
+rectangle "Generate samples\nprompt, temperature, top_k, seed" as sample
+rectangle "Diagnose result" as diagnose
+rectangle "Adjust one variable" as adjust
+rectangle "Keep best checkpoint\nlowest validation loss or best sample" as best
+
+config -right-> train
+train -right-> loss
+loss -down-> diagnose
+train -down-> sample
+sample -right-> diagnose
+diagnose -down-> best : good enough
+diagnose -left-> adjust : needs work
+adjust -up-> config
+@enduml

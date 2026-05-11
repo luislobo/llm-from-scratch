@@ -81,6 +81,8 @@ The pipeline for each token:
 5. Sample from the distribution with `multinomial`
 6. Append the sampled token and repeat
 
+![Autoregressive text generation loop](diagrams/generation-loop.png)
+
 `@torch.no_grad()` disables gradient computation — we don't need it for inference and it saves memory.
 
 The function takes `stoi`/`itos` mappings from the training data — these define how characters map to token IDs and back.

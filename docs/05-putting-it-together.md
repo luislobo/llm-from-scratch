@@ -59,6 +59,8 @@ This loads a checkpoint and generates text from three prompts. You can pass any 
 
 Once the basic pipeline works, try these to build intuition before the competition:
 
+![Training experiment cycle](diagrams/experiment-cycle.png)
+
 ### Model Size vs. Quality
 
 Train three models on the same data and compare output quality:
