@@ -1,0 +1,22 @@
+@startuml
+title MLP Block
+
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+
+rectangle "x\n(B, T, 384)" as input
+rectangle "c_fc\nLinear: 384 -> 1536\nexpand 4x" as cfc
+rectangle "GELU\nnon-linearity" as gelu
+rectangle "c_proj\nLinear: 1536 -> 384\nproject back" as cproj
+rectangle "output\n(B, T, 384)" as output
+
+input -down-> cfc
+cfc -down-> gelu
+gelu -down-> cproj
+cproj -down-> output
+@enduml

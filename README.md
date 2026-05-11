@@ -69,38 +69,7 @@ Work through the docs in order. Each part walks you through writing a piece of t
 
 ## Architecture: GPT at a Glance
 
-```
-Input Text
-    │
-    ▼
-┌─────────────────┐
-│   Tokenizer     │  "hello" → [20, 43, 50, 50, 53]  (character-level)
-└────────┬────────┘
-         ▼
-┌─────────────────┐
-│  Token Embed +  │  token IDs → vectors (n_embd dimensions)
-│  Position Embed │  + positional information
-└────────┬────────┘
-         ▼
-┌─────────────────┐
-│  Transformer    │  × n_layer
-│  Block:         │
-│  ┌────────────┐ │
-│  │ LayerNorm  │ │
-│  │ Self-Attn  │ │  n_head parallel attention heads
-│  │ + Residual │ │
-│  ├────────────┤ │
-│  │ LayerNorm  │ │
-│  │ MLP (FFN)  │ │  expand 4x, GELU, project back
-│  │ + Residual │ │
-│  └────────────┘ │
-└────────┬────────┘
-         ▼
-┌─────────────────┐
-│   LayerNorm     │
-│   Linear → logits│  vocab_size outputs (probability over next token)
-└─────────────────┘
-```
+![GPT architecture overview](docs/diagrams/gpt-at-a-glance.png)
 
 ## Model Configs for This Workshop
 

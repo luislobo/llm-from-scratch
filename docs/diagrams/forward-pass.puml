@@ -1,0 +1,27 @@
+@startuml
+title GPT Forward Pass
+
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+
+rectangle "token IDs\n(B, T)" as ids
+rectangle "wte\n[65, 384]" as wte
+rectangle "wpe\n[256, 384]" as wpe
+rectangle "tok_emb + pos_emb\nx (B, T, 384)" as x
+rectangle "Block x 6" as blocks
+rectangle "LayerNorm\nlm_head\nLinear: 384 -> 65" as head
+rectangle "logits\n(B, T, 65)" as logits
+
+ids -down-> wte
+ids -down-> wpe
+wte -down-> x
+wpe -down-> x
+x -down-> blocks
+blocks -down-> head
+head -down-> logits
+@enduml

@@ -6,12 +6,7 @@ Time to wire everything up, train on real data, and prepare for the competition.
 
 By now you should have:
 
-```
-scratchpad/
-├── model.py           # GPT architecture (Part 2)
-├── train.py           # Tokenization + data loading + training loop (Parts 1 & 3)
-└── generate.py        # Text generation (Part 4)
-```
+![Workshop project structure](diagrams/project-structure.png)
 
 The Shakespeare dataset is included in the repo at `data/shakespeare.txt` — no download needed.
 

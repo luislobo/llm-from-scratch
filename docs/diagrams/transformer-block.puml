@@ -1,0 +1,30 @@
+@startuml
+title Transformer Block
+
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+
+rectangle "x\n(B, T, 384)" as input
+rectangle "LayerNorm" as ln1
+rectangle "Self-Attention" as attn
+rectangle "+\nresidual connection" as add1
+rectangle "LayerNorm" as ln2
+rectangle "MLP" as mlp
+rectangle "+\nresidual connection" as add2
+rectangle "output\n(B, T, 384)" as output
+
+input -down-> ln1
+ln1 -down-> attn
+attn -down-> add1
+input -right-> add1
+add1 -down-> ln2
+ln2 -down-> mlp
+mlp -down-> add2
+add1 -right-> add2
+add2 -down-> output
+@enduml

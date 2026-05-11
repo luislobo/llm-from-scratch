@@ -1,0 +1,37 @@
+@startuml
+title GPT at a Glance
+
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+
+rectangle "Input Text" as input
+rectangle "Tokenizer\n\"hello\" -> [20, 43, 50, 50, 53]\ncharacter-level" as tokenizer
+rectangle "Token Embed + Position Embed\ntoken IDs -> vectors (n_embd dimensions)\n+ positional information" as embedding
+
+rectangle "Transformer Block x n_layer" as block {
+  rectangle "LayerNorm" as ln1
+  rectangle "Self-Attention\nn_head parallel attention heads" as attn
+  rectangle "+ Residual" as res1
+  rectangle "LayerNorm" as ln2
+  rectangle "MLP (FFN)\nexpand 4x, GELU, project back" as mlp
+  rectangle "+ Residual" as res2
+
+  ln1 -down-> attn
+  attn -down-> res1
+  res1 -down-> ln2
+  ln2 -down-> mlp
+  mlp -down-> res2
+}
+
+rectangle "LayerNorm\nLinear -> logits\nvocab_size outputs\nprobability over next token" as output
+
+input -down-> tokenizer
+tokenizer -down-> embedding
+embedding -down-> block
+block -down-> output
+@enduml

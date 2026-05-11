@@ -1,0 +1,21 @@
+@startuml
+title Workshop Project Structure
+
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam folder {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+skinparam file {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+
+folder "scratchpad/" {
+  file "model.py\nGPT architecture (Part 2)" as model
+  file "train.py\nTokenization + data loading + training loop\n(Parts 1 & 3)" as train
+  file "generate.py\nText generation (Part 4)" as generate
+}
+@enduml
